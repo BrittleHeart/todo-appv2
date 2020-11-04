@@ -1,5 +1,6 @@
 import * as os from 'os'
 import * as fs from 'fs'
+import * as path from 'path'
 import Todo from '../Todo'
 const yup = require('yup')
 
@@ -11,7 +12,12 @@ class TodoController {
             user_ip: os.networkInterfaces()
         }
 
-        return fs.appendFile('UserInfo.txt', userInfo + '\n')
+        const directory = path.resolve(__dirname,'../storage/')
+        const token = req.header('Authorization')
+
+        fs.mkdir(`${directory}/users_info/${token}/`, () => {})
+
+        return fs.appendFile(`${directory}/users_info/${token}/info.json`, `${JSON.stringify(userInfo, null, 2)}\n\n\n`, () => {})
     }
 
     /**
@@ -45,8 +51,8 @@ class TodoController {
 
         const todo = await Todo.findOne({where: {todoId: id}})
 
-        if(!todo.length)
-            return res.status(404).json({todo, status: 404})
+        if(!todo)
+            return res.status(404).json({todos: [], status: 404})
         
         return res.status(200).json({todo})
     }
