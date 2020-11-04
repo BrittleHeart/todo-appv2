@@ -56,7 +56,7 @@ To start this project, you need to as first go to ->
     * [x] -> Write the ***TodoController*** for saving logic.
     * [x] -> Setup the mysql database
     * [x] -> Create the CRUD implmentation
-    * [ ] -> Create the backup for todo with maybe some file setup
+    * [x] -> Create the backup for todo with maybe some file setup
 * Frontend-side
     * [ ] -> Create the ***Vue3*** project
     * [ ] -> Create the main page like Hello in my todo-appv2 project
