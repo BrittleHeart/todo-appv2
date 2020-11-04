@@ -4,8 +4,6 @@ import {logger} from '../../server'
 export const verifyJWTToken = (req, res, next) => {
     const accessTokenHeader = req.header('Authorization')
 
-    console.log(accessTokenHeader)
-
     if(!accessTokenHeader)
         return res.status(401).json({status: 401, message: 'No authorization token provided'})
     
