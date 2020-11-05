@@ -43,7 +43,8 @@ export default {
   }),
   methods: {
     logout() {
-      return localStorage.removeItem('token')
+      localStorage.removeItem('token')
+      return this.$router.push('/login')
     }
   },
   watch: {
