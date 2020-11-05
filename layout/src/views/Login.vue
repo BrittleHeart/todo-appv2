@@ -1,7 +1,8 @@
 <template>
   <div class="login">
-    <p>{{formError}}</p>
-    <form @submit.prevent="login()">
+    <p v-if="loggedIn">Loading ..</p>
+    <p v-if="formError">{{formError}}</p>
+    <form @submit.prevent="login()" v-if="!loggedIn && !invalidCredentials">
       <div class="form-group">
         <label for="email">Email:</label>
         <input 
@@ -30,6 +31,10 @@
       </div>
       <button type="submit" class="button">Sign in</button>
     </form>
+    <div v-if="invalidCredentials">
+      <h1>Invalid credentials</h1>
+      <button @click="invalidCredentials = false">Try again</button>
+    </div>
   </div>
 </template>
 
@@ -49,20 +54,19 @@ export default {
       password: '',
     },
     formError: '',
-    loggedIn: false
+    loggedIn: false,
+    invalidCredentials: false
   }),
   methods: {
     async login() {
       this.formError = '' 
 
       if(this.isUserValid()) {
-        this.loggedIn = true
-
         try {
           const response = await axios.post('http://localhost:3000/api/v1/authenticate', this.user)
 
           if(!response.data.access_token)
-            return this.formError = "Invalid credentials"
+            return this.invalidCredentials = true
 
           switch(response.status)
           {
@@ -76,9 +80,10 @@ export default {
 
           if(response.status === 200 && response.data.access_token) {
             window.localStorage.setItem("token", response.data.access_token)
-            return this.$router.push('/dashboard')
+            this.loggedIn = true
+            // return console.log(response.data.access_token)
+            return setTimeout(() => this.$router.push('/dashboard'), 1000)
           }
-
         } catch(error) {
           return this.formError = error
         }

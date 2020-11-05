@@ -7,6 +7,14 @@ import Dashboard from '../views/Dashboard.vue'
 
 Vue.use(VueRouter)
 
+const checkForToken = (to, from, next) => {
+  if(localStorage.getItem('token')) {
+    next('/dashboard')
+  } else {
+    next()
+  }
+}
+
 const routes = [
   {
     path: '/',
@@ -16,17 +24,26 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: Login,
+    beforeEnter: checkForToken
   },
   {
     path: '/register',
     name: 'Register',
-    component: Register
+    component: Register,
+    beforeEnter: checkForToken
   },
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: Dashboard
+    component: Dashboard,
+    beforeEnter: (to, from, next) => {
+      if(!localStorage.getItem('token')) {
+        next('/login')
+      } else {
+        next()
+      }
+    }
   },
 ]
 

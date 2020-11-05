@@ -1,9 +1,13 @@
 <template>
   <div id="app">
-    <div id="nav">
+    <div id="nav" v-if="!token">
       <router-link to="/">Home</router-link> |
       <router-link to="/login">Login</router-link> |
       <router-link to="/register">Register</router-link>
+    </div>
+    <div id="nav" v-else>
+      <router-link to="/">Home</router-link> |
+      <a @click="logout()">Logout</a> |
     </div>
     <router-view/>
   </div>
@@ -31,3 +35,21 @@
   color: #42b983;
 }
 </style>
+
+<script>
+export default {
+  data: () => ({
+    token: localStorage.getItem('token')
+  }),
+  methods: {
+    logout() {
+      return localStorage.removeItem('token')
+    }
+  },
+  watch: {
+    token(newVal, oldVal) {
+      return this.token ? true : false
+    }
+  }
+}
+</script>
