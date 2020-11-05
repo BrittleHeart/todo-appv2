@@ -60,7 +60,7 @@ class UserController {
         const user_schema = yup.object().shape({
             name: yup.string().min(4).max(10).trim().required(),
             email: yup.string().min(5).max(255).email().trim().required(),
-            password: yup.string().min(3).max(255).trim().required()
+            password: yup.string().min(7).max(255).trim().required()
         })
 
         const escapedName = escape(name)

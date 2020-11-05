@@ -10,7 +10,7 @@ class AuthenticationController {
 
         const schema = yup.object().shape({
             email: yup.string().min(7).max(255).email().required(),
-            password: yup.string().min(10).max(255).required()
+            password: yup.string().min(7).max(255).required()
         })
 
         try {await schema.validate({email, password})}
