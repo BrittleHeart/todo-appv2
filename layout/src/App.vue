@@ -99,6 +99,8 @@ body {
   background-color:  rgba(120, 250, 120, .5);
   font-weight: 600;
 }
+
+.text-muted {color: rgba(150, 150, 150, 1)}
 </style>
 
 <script>
