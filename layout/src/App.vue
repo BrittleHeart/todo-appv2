@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div id="nav" class="nav" v-if="!token" role="navigation">
+    <div id="nav" class="nav" role="navigation">
       <h1 class="nav__header">Todo App V2 👻</h1>
       <ul class="nav__list">
         <li class="nav__list--item">
@@ -31,7 +31,7 @@
           <span class="nav__item--icon">
             <font-awesome-icon icon="sign-out-alt"></font-awesome-icon>
           </span>
-          <a @click="token()" class="nav__item--link">Logout</a>
+          <a @click="logout()" class="nav__item--link">Logout</a>
         </li>
       </ul>
     </div>
