@@ -75,7 +75,7 @@ class TodoController {
         try {await schema.validate({name, content})}
         catch(error) {return res.status(500).json({message: error.message})}
 
-        const todo = await Todo.create({name, content})
+        const todo = await Todo.create({name, content, is_completed: false})
 
         if(!todo)
             return res.status(500).json({message: 'Could not create an Todo', status: 500})
@@ -121,6 +121,25 @@ class TodoController {
             return res.status(500).json({message: 'Could not update the todo', status: 500})
 
         return res.status(200).json({update_todo})
+    }
+
+    async markAsDone(req, res) {
+        const {id} = req.params
+
+        if(!id || isNaN(id))
+            return res.status(400).json({status: 400, message: 'Id param must exists and must be integer'})
+
+        const todo = await Todo.findOne({where: {todoId: id}})
+        
+        if(todo.length === 0)
+            return res.status(404).json({todo, status: 404})
+            
+        const doneTodo = await todo.update({is_completed: true})
+    
+        if(!doneTodo)
+            return res.status(500).json({message: 'Could not update the todo', status: 500})
+    
+        return res.status(200)
     }
 
     /**

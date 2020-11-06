@@ -8,10 +8,10 @@
       <section class="todos__list--wrapper">
         <h2 class="todos__list__header">All todos</h2>
         <ul class="todos__list" v-if="todos.length > 0">
-          <li class="todos__list--item" v-for="(todo, index) in todos" :key="todo.todoId">
-            <span>{{todo.name}}</span>
+          <li class="todos__list--item" v-for="(todo, index) in todos" :key="todo.todoId" :class="{'done': todo.is_completed, 'notDone': !todo.is_completed}">
+            <span >{{todo.name}}</span>
             <span class="actions">
-              <i class="item__action">Mark as done</i>
+              <i class="item__action" @click="done(todo.todoId, index, todo)">Mark as done</i>
               <i class="item__action">Edit</i>
               <i class="item__action" @click="deleteTodo(todo.todoId, index)">Delete</i>
             </span>
@@ -137,6 +137,15 @@ export default {
           if(response.status === 200)
             this.todos.splice(index, 1);
         } catch (e) {this.formError = e}
+    },
+    async done(todoIndex, index, todo) {
+      try {
+          let findTodo = this.todos.find(todo => todo.todoId === todoIndex)
+          const response = await axios.put(`http://localhost:3000/api/v1/todos/${findTodo.todoId}/done`, {}, {headers: {Authorization: localStorage.getItem('token')}})
+
+          return todo.is_completed = true
+        } catch (e) {this.formError = e}
+        
     }
   },
   created() {
@@ -160,6 +169,9 @@ export default {
   width: 100%;
   max-width: 100%;
 }
+
+.done {border-left: 3px solid green;}
+.notDone {border-left: 3px solid rgba(130, 130, 130, .6);}
 
 .dashboard .dashboard__heading {
   display: flex;
@@ -227,7 +239,6 @@ export default {
   justify-content: space-between;
   width: 70%;
   max-width: 70%;
-  border-left: 3px solid rgba(130, 130, 130, .6);
   padding: 10px 7px;
   background-color: rgba(251, 251, 251, .6);
 }

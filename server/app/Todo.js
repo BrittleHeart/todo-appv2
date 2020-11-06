@@ -23,6 +23,12 @@ const Todo = connection.define('todos', {
         max: 255
     },
 
+    is_completed: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        default: 0,
+    },
+
     createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
