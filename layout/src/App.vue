@@ -1,38 +1,103 @@
 <template>
   <div id="app">
-    <div id="nav" v-if="!token">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/login">Login</router-link> |
-      <router-link to="/register">Register</router-link>
-    </div>
-    <div id="nav" v-else>
-      <router-link to="/">Home</router-link> |
-      <a @click="logout()">Logout</a> |
+    <div id="nav" class="nav" v-if="!token" role="navigation">
+      <h1 class="nav__header">Todo App V2 👻</h1>
+      <ul class="nav__list">
+        <li class="nav__list--item">
+          <router-link to="/" class="nav__item--link">
+            <span class="nav__item--icon">
+              <font-awesome-icon icon="home"></font-awesome-icon>
+            </span>
+            Home
+          </router-link>
+        </li>
+        <li class="nav__list--item" v-if="!token">
+          <router-link to="/login" class="nav__item--link" >
+            <span class="nav__item--icon">
+              <font-awesome-icon icon="user"></font-awesome-icon>
+            </span>
+            Login
+          </router-link>
+        </li>
+        <li class="nav__list--item" v-if="!token">
+          <router-link to="/register" class="nav__item--link" >
+            <span class="nav__item--icon">
+              <font-awesome-icon icon="user-plus"></font-awesome-icon>
+            </span>
+            Register
+          </router-link>
+        </li>
+        <li class="nav__list--item" v-if="token">
+          <span class="nav__item--icon">
+            <font-awesome-icon icon="sign-out-alt"></font-awesome-icon>
+          </span>
+          <a @click="token()" class="nav__item--link">Logout</a>
+        </li>
+      </ul>
     </div>
     <router-view/>
   </div>
 </template>
 
 <style>
-#app {
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  line-height: 1;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+}
+body {
+  max-width: 100vw;
+  background-color: #e4e4e4;
+}
+#app {
+  width: 100%;
+  max-width: 100%;
 }
 
-#nav {
-  padding: 30px;
+#app .nav {
+  width: 100%;
+  max-width: 100%;
+  padding: 10px 7px;
+  background-color: rgba(56, 56, 56, 0.829);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgb(244, 244, 244);
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+#app .nav .nav__list {
+  list-style: none;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+#app .nav .nav__list--item {
+  display: inline-block;
+  margin: 0 20px;
+}
+
+#app .nav .nav__item--icon {
+  margin: 0 7px 0 0;
+}
+
+#app .nav .nav__item--link {
+  text-decoration: none;
+  color:  rgb(244, 244, 244);
+  padding: 8px;
+  transition: background-color .5s ease;
+}
+
+#app .nav .nav__item--link:hover {
+  background-color: rgba(120, 250, 120, .5);
+}
+
+.router-link-exact-active {
+  border-left: 3px solid rgba(120, 250, 120, .9);
+  transition: background-color .7s ease-in-out;
+  background-color:  rgba(120, 250, 120, .5);
+  font-weight: 600;
 }
 </style>
 
