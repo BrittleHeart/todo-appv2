@@ -58,19 +58,19 @@ To start this project, you need to as first go to ->
     * [x] -> Create the CRUD implmentation
     * [x] -> Create the backup for todo with maybe some file setup
 * Frontend-side
-    * [ ] -> Create the ***Vue3*** project
-    * [ ] -> Create the main page like Hello in my todo-appv2 project
-    * [ ] -> Create the login route
-        * [ ] -> Create form for log in
-        * [ ] -> Check user's passed data before letting him to login
-        * [ ] -> If login successed, save the token sent by Server
-        * [ ] -> Redirect to Todos
+    * [x] -> Create the ***Vue3*** project
+    * [x] -> Create the main page like Hello in my todo-appv2 project
+    * [x] -> Create the login route
+        * [x] -> Create form for log in
+        * [x] -> Check user's passed data before letting him to login
+        * [x] -> If login successed, save the token sent by Server
+        * [x] -> Redirect to Todos
     * [ ] -> Create register route
         * [ ] -> Create form for register
         * [ ] -> Check user's passed data before letting him to register
         * [ ] -> If register successed, save the token sent by Server
         * [ ] -> Redirect to Todos
-    * [ ] -> Create todo route
-        * [ ] -> Check if token exists in the local storage
-        * [ ] -> Show all Todos
-        * [ ] -> Let user to add ned todo
+    * [x] -> Create todo route
+        * [x] -> Check if token exists in the local storage
+        * [x] -> Show all Todos
+        * [x] -> Let user to add ned todo
