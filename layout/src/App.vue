@@ -28,10 +28,20 @@
           </router-link>
         </li>
         <li class="nav__list--item" v-if="token">
-          <span class="nav__item--icon">
-            <font-awesome-icon icon="sign-out-alt"></font-awesome-icon>
-          </span>
-          <a @click="logout()" class="nav__item--link">Logout</a>
+          <router-link to="/dashboard" class="nav__item--link" >
+            <span class="nav__item--icon">
+              <font-awesome-icon icon="clipboard"></font-awesome-icon>
+            </span>
+            Dashboard
+          </router-link>
+        </li>
+        <li class="nav__list--item" v-if="token">
+          <a @click="logout()" class="nav__item--link">
+            <span class="nav__item--icon">
+              <font-awesome-icon icon="sign-out-alt"></font-awesome-icon>
+            </span>
+            Logout
+          </a>
         </li>
       </ul>
     </div>
@@ -111,7 +121,7 @@ export default {
   methods: {
     logout() {
       localStorage.removeItem('token')
-      return this.$router.push('/login')
+      return location.reload()
     }
   },
   watch: {

@@ -88,7 +88,7 @@ export default {
           if(response.status === 200 && response.data.access_token) {
             window.localStorage.setItem("token", response.data.access_token)
             this.loggedIn = true
-            return setTimeout(() => this.$router.push('/dashboard'), 1000)
+            return setTimeout(() => {this.$router.push('/dashboard'), 2000})
           }
         } catch(error) {
           return this.formError = error
