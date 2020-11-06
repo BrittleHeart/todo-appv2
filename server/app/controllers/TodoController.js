@@ -31,7 +31,7 @@ class TodoController {
         const todos = await Todo.findAll()
 
         if(!todos.length)
-            return res.status(404).json({todos, status: 404})
+            return res.status(200).json({todos, status: 200})
         
         return res.status(200).json({todos})
     }
@@ -68,22 +68,14 @@ class TodoController {
         const {name, content} = req.body
 
         const schema = yup.object().shape({
-            name: yup.string().min(4).max(10).trim().required(),
+            name: yup.string().min(4).max(40).trim().required(),
             content: yup.string().min(5).max(255).trim().required(),
         })
-
-        const escpaed_name = escape(name)
-        const escpaed_content = escape(content)
 
         try {await schema.validate({name, content})}
         catch(error) {return res.status(500).json({message: error.message})}
 
-        const todo = await Todo.create(
-            {
-                name: escpaed_name, 
-                content: escpaed_content
-            }
-        )
+        const todo = await Todo.create({name, content})
 
         if(!todo)
             return res.status(500).json({message: 'Could not create an Todo', status: 500})

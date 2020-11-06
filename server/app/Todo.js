@@ -13,7 +13,7 @@ const Todo = connection.define('todos', {
         type: Sequelize.STRING,
         allowNull: false,
         min: 4,
-        max: 10,
+        max: 40,
     },
 
     content: {
