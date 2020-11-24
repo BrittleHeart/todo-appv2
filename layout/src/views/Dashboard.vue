@@ -11,9 +11,9 @@
           <li class="todos__list--item" v-for="(todo, index) in todos" :key="todo.todoId" :class="{'done': todo.is_completed, 'notDone': !todo.is_completed}">
             <span >{{todo.name}}</span>
             <span class="actions">
-              <i class="item__action" @click="done(todo.todoId, index, todo)">Mark as done</i>
-              <i class="item__action">Edit</i>
-              <i class="item__action" @click="deleteTodo(todo.todoId, index)">Delete</i>
+              <i class="item__action item__action--done" @click="done(todo.todoId, index, todo)" v-if="!todos[index].is_completed">Mark as done</i>
+              <i class="item__action item__action--edit">Edit</i>
+              <i class="item__action item__action--delete" @click="deleteTodo(todo.todoId, index)">Delete</i>
             </span>
           </li>
         </ul>
@@ -139,13 +139,13 @@ export default {
         } catch (e) {this.formError = e}
     },
     async done(todoIndex, index, todo) {
+      const newTodo = [...this.todos]
+      newTodo[index].is_completed = true
+      this.todos = newTodo
       try {
           let findTodo = this.todos.find(todo => todo.todoId === todoIndex)
-          const response = await axios.put(`http://localhost:3000/api/v1/todos/${findTodo.todoId}/done`, {}, {headers: {Authorization: localStorage.getItem('token')}})
-
-          return todo.is_completed = true
-        } catch (e) {this.formError = e}
-        
+          await axios.put(`http://localhost:3000/api/v1/todos/${findTodo.todoId}/done`, {}, {headers: {Authorization: localStorage.getItem('token')}})
+      } catch (e) {this.formError = e}
     }
   },
   created() {
@@ -248,15 +248,15 @@ export default {
   cursor: pointer;
 }
 
-.todos__list--wrapper .todos__list--item .actions .item__action:hover:first-child {
+.todos__list--wrapper .todos__list--item .actions .item__action--done:hover {
   color: grey;
 }
 
-.todos__list--wrapper .todos__list--item .actions .item__action:hover:nth-child(2) {
+.todos__list--wrapper .todos__list--item .actions .item__action--edit:hover {
   color: blue;
 }
 
-.todos__list--wrapper .todos__list--item .actions .item__action:hover:nth-child(3) {
+.todos__list--wrapper .todos__list--item .actions .item__action--delete:hover {
   color: red;
 }
 
